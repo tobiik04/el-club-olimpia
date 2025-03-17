@@ -19,5 +19,5 @@ docker-compose up -d
 7. Ejecutar el SEED
 
 ```
-http://localhost:3000/api/seed
+http://localhost:3000/api/olimpia/seed
 ```
