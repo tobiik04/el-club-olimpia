@@ -5,14 +5,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { Socio } from 'src/socios/entities/socio.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SocioGuard implements CanActivate {
   constructor(
-    private readonly dataSource: DataSource,
+    @InjectRepository(Socio)
+    private readonly socioRepository: Repository<Socio>,
     private reflector: Reflector,
   ) {}
 
@@ -22,7 +24,7 @@ export class SocioGuard implements CanActivate {
 
     if (!user) throw new NotFoundException('Usuario no encontrado');
 
-    const socio = await this.dataSource.getRepository(Socio).findOne({
+    const socio = await this.socioRepository.findOne({
       where: {
         user: {
           id: user.id,
