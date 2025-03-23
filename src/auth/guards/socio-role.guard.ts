@@ -32,6 +32,8 @@ export class SocioGuard implements CanActivate {
       },
     });
 
+    if (!socio) throw new NotFoundException('Socio no encontrado');
+
     return true;
   }
 }
